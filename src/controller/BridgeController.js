@@ -1,3 +1,5 @@
+const { Console } = require('@woowacourse/mission-utils');
+
 const BridgeGame = require('../service/BridgeGame');
 const Validator = require('../Validator');
 const InputView = require('../views/InputView');
@@ -11,8 +13,8 @@ class BridgeController {
   }
 
   #commandHandler = {
-    1: this.#gameRetry.bind(this),
-    2: this.#gameExit.bind(this),
+    R: this.#gameRetry.bind(this),
+    Q: this.#gameExit.bind(this),
   };
 
   gameStart() {
@@ -80,13 +82,28 @@ class BridgeController {
     InputView.readGameCommand(this.#validateGameCommand.bind(this));
   }
 
-  #validateGameCommand(command) {}
+  #validateGameCommand(command) {
+    const errorMessage = Validator.getErrorMessageIfInvalidCommand(command);
+    if (errorMessage) {
+      OutputView.printErrorMessage(errorMessage);
+      this.#inputRetry();
+      return;
+    }
+
+    this.#commandHandler[command]();
+  }
 
   #checkUserWin() {}
 
   #gameRetry() {}
 
-  #gameExit(isCleared) {}
+  #gameExit() {
+    const gameResult = this.#bridgeGame.getResultInfo();
+
+    OutputView.printResult(gameResult);
+
+    Console.close();
+  }
 }
 
 module.exports = BridgeController;

@@ -17,6 +17,13 @@ const Validator = {
 
     return '';
   },
+
+  getErrorMessageIfInvalidCommand(command) {
+    const regex = /^R|Q$/;
+    if (!regex.test(command)) return 'R과 Q 중 하나의 값을 입력해주세요.';
+
+    return '';
+  },
 };
 
 module.exports = Validator;

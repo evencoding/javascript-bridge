@@ -16,7 +16,7 @@ class BridgeGame {
     this.#nextCellIndex = 0;
     this.#bridgeMap = { U: [], D: [] };
     this.#fail = false;
-    this.#triedCount = 0;
+    this.#triedCount = 1;
   }
 
   #directionHandler = {
@@ -60,6 +60,14 @@ class BridgeGame {
   }
 
   retry() {}
+
+  getResultInfo() {
+    return {
+      bridgeMap: this.#bridgeMap,
+      isCleared: !this.#fail,
+      triedCount: this.#triedCount,
+    };
+  }
 }
 
 module.exports = BridgeGame;
