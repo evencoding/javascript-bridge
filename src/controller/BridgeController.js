@@ -1,4 +1,5 @@
 const BridgeGame = require('../service/BridgeGame');
+const InputView = require('../views/InputView');
 const OutputView = require('../views/OutputView');
 
 class BridgeController {
@@ -17,7 +18,11 @@ class BridgeController {
     OutputView.printGameStartMessage();
   }
 
-  #inputBridgeSize() {}
+  #inputBridgeSize() {
+    InputView.readBridgeSize(this.#handleBridgeSize.bind(this));
+  }
+
+  #handleBridgeSize(bridgeSize) {}
 }
 
 module.exports = BridgeController;
