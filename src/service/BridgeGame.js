@@ -1,82 +1,38 @@
-const { makeBridge } = require('../BridgeMaker');
-const { generate } = require('../BridgeRandomNumberGenerator');
-const { BRIDGE } = require('../constants');
+const Bridge = require('../models/Bridge');
 
 class BridgeGame {
   #bridge;
 
-  #nextCellIndex;
-
-  #bridgeMap;
-
-  #fail;
-
   #triedCount;
 
-  constructor() {
+  constructor(bridgeSize) {
+    this.#bridge = new Bridge(bridgeSize);
     this.#triedCount = 1;
-    this.#initGameProcess();
-  }
-
-  #initGameProcess() {
-    this.#nextCellIndex = 0;
-    this.#bridgeMap = { U: [], D: [] };
-    this.#fail = false;
-  }
-
-  #directionHandler = {
-    U: this.#moveUp.bind(this),
-    D: this.#moveDown.bind(this),
-  };
-
-  makeBridge(bridgeSize) {
-    this.#bridge = makeBridge(bridgeSize, generate);
   }
 
   move(direction) {
-    if (direction !== this.#bridge[this.#nextCellIndex]) {
-      this.#fail = true;
-    }
-    this.#directionHandler[direction]();
+    const { bridgeMap, fail } = this.#bridge.getUpdatedMap(direction);
 
-    return { curMap: this.#bridgeMap, fail: this.#fail };
-  }
-
-  #moveUp() {
-    if (this.#fail) {
-      this.#bridgeMap.U.push(BRIDGE.FAIL);
-      this.#bridgeMap.D.push(BRIDGE.OTHER);
-      return;
-    }
-    this.#bridgeMap.U.push(BRIDGE.OK);
-    this.#bridgeMap.D.push(BRIDGE.OTHER);
-    this.#nextCellIndex += 1;
-  }
-
-  #moveDown() {
-    if (this.#fail) {
-      this.#bridgeMap.D.push(BRIDGE.FAIL);
-      this.#bridgeMap.U.push(BRIDGE.OTHER);
-      return;
-    }
-    this.#bridgeMap.D.push(BRIDGE.OK);
-    this.#bridgeMap.U.push(BRIDGE.OTHER);
-    this.#nextCellIndex += 1;
+    return { bridgeMap, fail };
   }
 
   retry() {
-    this.#initGameProcess();
+    this.#bridge.initBridgeInfo();
     this.#triedCount += 1;
   }
 
   checkUserWin() {
-    return this.#nextCellIndex === this.#bridge.length;
+    const { nextCellIndex, bridgeLength } = this.#bridge.getBridgeInfo();
+
+    return nextCellIndex === bridgeLength;
   }
 
   getResultInfo() {
+    const { bridgeMap, fail } = this.#bridge.getBridgeInfo();
+
     return {
-      bridgeMap: this.#bridgeMap,
-      isCleared: !this.#fail,
+      bridgeMap,
+      isCleared: !fail,
       triedCount: this.#triedCount,
     };
   }

@@ -11,10 +11,6 @@ const { ERROR_TYPE } = require('../constants');
 class BridgeController {
   #bridgeGame;
 
-  constructor() {
-    this.#bridgeGame = new BridgeGame();
-  }
-
   #commandHandler = Object.freeze({
     R: this.#gameRetry.bind(this),
     Q: this.#printGameResult.bind(this),
@@ -51,7 +47,7 @@ class BridgeController {
   }
 
   #handleBridgeSize(bridgeSize) {
-    this.#bridgeGame.makeBridge(Number(bridgeSize));
+    this.#bridgeGame = new BridgeGame(bridgeSize);
 
     this.#inputDirection();
   }
@@ -71,8 +67,8 @@ class BridgeController {
   }
 
   #handleDirection(direction) {
-    const { curMap, fail } = this.#bridgeGame.move(direction);
-    this.#printCurMap(curMap);
+    const { bridgeMap, fail } = this.#bridgeGame.move(direction);
+    this.#printCurMap(bridgeMap);
 
     if (fail) {
       this.#inputRetry();
