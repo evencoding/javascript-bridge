@@ -45,7 +45,14 @@ class BridgeController {
     InputView.readMoving(this.#validateDirection.bind(this));
   }
 
-  #validateDirection(direction) {}
+  #validateDirection(direction) {
+    const errorMessage = Validator.getErrorMessageIfInvalidDirection(direction);
+    if (errorMessage) {
+      OutputView.printErrorMessage(errorMessage);
+      this.#inputDirection();
+      return;
+    }
+  }
 }
 
 module.exports = BridgeController;

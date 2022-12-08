@@ -10,6 +10,13 @@ const Validator = {
 
     return '';
   },
+
+  getErrorMessageIfInvalidDirection(direction) {
+    const regex = /^U|D$/;
+    if (!regex.test(direction)) return 'U와 D 중 하나의 값을 입력해주세요.';
+
+    return '';
+  },
 };
 
 module.exports = Validator;
