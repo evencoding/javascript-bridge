@@ -42,7 +42,10 @@ class BridgeController {
   #validateBridgeSize(bridgeSize) {
     const errorMessage =
       Validator.getErrorMessageIfInvalidBridgeSize(bridgeSize);
-    this.#handleError(errorMessage, ERROR_TYPE.SIZE);
+    if (errorMessage) {
+      this.#handleError(errorMessage, ERROR_TYPE.SIZE);
+      return;
+    }
 
     this.#handleBridgeSize(bridgeSize);
   }
@@ -59,7 +62,10 @@ class BridgeController {
 
   #validateDirection(direction) {
     const errorMessage = Validator.getErrorMessageIfInvalidDirection(direction);
-    this.#handleError(errorMessage, ERROR_TYPE.DIRECTION);
+    if (errorMessage) {
+      this.#handleError(errorMessage, ERROR_TYPE.DIRECTION);
+      return;
+    }
 
     this.#handleDirection(direction);
   }
@@ -85,7 +91,10 @@ class BridgeController {
 
   #validateGameCommand(command) {
     const errorMessage = Validator.getErrorMessageIfInvalidCommand(command);
-    this.#handleError(errorMessage, ERROR_TYPE.COMMAND);
+    if (errorMessage) {
+      this.#handleError(errorMessage, ERROR_TYPE.COMMAND);
+      return;
+    }
 
     this.#commandHandler[command]();
   }
@@ -120,10 +129,8 @@ class BridgeController {
   }
 
   #handleError(message, type) {
-    if (message) {
-      OutputView.printErrorMessage(message);
-      this.#errorHandler[type]();
-    }
+    OutputView.printErrorMessage(message);
+    this.#errorHandler[type]();
   }
 }
 

@@ -1,5 +1,6 @@
 const { makeBridge } = require('../BridgeMaker');
 const { generate } = require('../BridgeRandomNumberGenerator');
+const { BRIDGE } = require('../constants');
 
 class BridgeGame {
   #bridge;
@@ -43,23 +44,23 @@ class BridgeGame {
 
   #moveUp() {
     if (this.#fail) {
-      this.#bridgeMap.U.push('X');
-      this.#bridgeMap.D.push(' ');
+      this.#bridgeMap.U.push(BRIDGE.FAIL);
+      this.#bridgeMap.D.push(BRIDGE.OTHER);
       return;
     }
-    this.#bridgeMap.U.push('O');
-    this.#bridgeMap.D.push(' ');
+    this.#bridgeMap.U.push(BRIDGE.OK);
+    this.#bridgeMap.D.push(BRIDGE.OTHER);
     this.#nextCellIndex += 1;
   }
 
   #moveDown() {
     if (this.#fail) {
-      this.#bridgeMap.D.push('X');
-      this.#bridgeMap.U.push(' ');
+      this.#bridgeMap.D.push(BRIDGE.FAIL);
+      this.#bridgeMap.U.push(BRIDGE.OTHER);
       return;
     }
-    this.#bridgeMap.D.push('O');
-    this.#bridgeMap.U.push(' ');
+    this.#bridgeMap.D.push(BRIDGE.OK);
+    this.#bridgeMap.U.push(BRIDGE.OTHER);
     this.#nextCellIndex += 1;
   }
 

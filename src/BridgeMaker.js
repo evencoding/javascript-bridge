@@ -1,3 +1,5 @@
+const { BRIDGE } = require('./constants');
+
 const BridgeMaker = {
   /**
    * @param {number} size 다리의 길이
@@ -7,9 +9,9 @@ const BridgeMaker = {
   makeBridge(size, generateRandomNumber) {
     return Array.from({ length: size }, () => {
       const isUp = generateRandomNumber() > 0;
-      if (isUp) return 'U';
+      if (isUp) return BRIDGE.UP;
 
-      return 'D';
+      return BRIDGE.DOWN;
     });
   },
 };

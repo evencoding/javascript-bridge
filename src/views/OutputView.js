@@ -1,27 +1,29 @@
 const { Console } = require('@woowacourse/mission-utils');
 
+const { MESSAGE, ERROR_FORM } = require('../constants');
+
 const OutputView = {
   printGameStartMessage() {
-    Console.print('다리 건너기 게임을 시작합니다.');
+    Console.print(MESSAGE.GAME_START);
   },
 
   printMap(map) {
     const rows = Object.values(map);
     rows.forEach((row) => {
-      Console.print(`[ ${row.join(' | ')} ]`);
+      Console.print(MESSAGE.mapOfRow(row));
     });
   },
 
   printResult({ bridgeMap, isCleared, triedCount }) {
-    Console.print('\n최종 게임 결과');
+    Console.print(MESSAGE.RESULT);
     this.printMap(bridgeMap);
 
-    Console.print(`\n게임 성공 여부: ${isCleared ? '성공' : '실패'}`);
-    Console.print(`총 시도한 횟수: ${triedCount}`);
+    Console.print(MESSAGE.clear(isCleared));
+    Console.print(MESSAGE.tryCount(triedCount));
   },
 
   printErrorMessage(message) {
-    Console.print(`[ERROR] ${message}`);
+    Console.print(`${ERROR_FORM}${message}`);
   },
 };
 
