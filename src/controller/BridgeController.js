@@ -1,4 +1,5 @@
 const BridgeGame = require('../service/BridgeGame');
+const Validator = require('../Validator');
 const InputView = require('../views/InputView');
 const OutputView = require('../views/OutputView');
 
@@ -19,7 +20,19 @@ class BridgeController {
   }
 
   #inputBridgeSize() {
-    InputView.readBridgeSize(this.#handleBridgeSize.bind(this));
+    InputView.readBridgeSize(this.#validateBridgeSize.bind(this));
+  }
+
+  #validateBridgeSize(bridgeSize) {
+    const errorMessage =
+      Validator.getErrorMessageIfInvalidBridgeSize(bridgeSize);
+    if (errorMessage) {
+      OutputView.printErrorMessage(errorMessage);
+      this.#inputBridgeSize();
+      return;
+    }
+
+    this.#handleBridgeSize(bridgeSize);
   }
 
   #handleBridgeSize(bridgeSize) {}
