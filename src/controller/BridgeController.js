@@ -35,7 +35,9 @@ class BridgeController {
     this.#handleBridgeSize(bridgeSize);
   }
 
-  #handleBridgeSize(bridgeSize) {}
+  #handleBridgeSize(bridgeSize) {
+    this.#bridgeGame.makeBridge(Number(bridgeSize));
+  }
 }
 
 module.exports = BridgeController;
