@@ -13,7 +13,7 @@ const OutputView = {
   },
 
   printResult({ bridgeMap, isCleared, triedCount }) {
-    Console.print('최종 게임 결과');
+    Console.print('\n최종 게임 결과');
     this.printMap(bridgeMap);
 
     Console.print(`\n게임 성공 여부: ${isCleared ? '성공' : '실패'}`);

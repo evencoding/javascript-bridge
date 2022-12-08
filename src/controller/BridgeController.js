@@ -1,9 +1,12 @@
 const { Console } = require('@woowacourse/mission-utils');
 
 const BridgeGame = require('../service/BridgeGame');
-const Validator = require('../Validator');
+
 const InputView = require('../views/InputView');
 const OutputView = require('../views/OutputView');
+
+const Validator = require('../Validator');
+const { ERROR_TYPE } = require('../constants');
 
 class BridgeController {
   #bridgeGame;
@@ -12,10 +15,16 @@ class BridgeController {
     this.#bridgeGame = new BridgeGame();
   }
 
-  #commandHandler = {
+  #commandHandler = Object.freeze({
     R: this.#gameRetry.bind(this),
     Q: this.#printGameResult.bind(this),
-  };
+  });
+
+  #errorHandler = Object.freeze({
+    size: this.#inputBridgeSize.bind(this),
+    direction: this.#inputDirection.bind(this),
+    command: this.#inputRetry.bind(this),
+  });
 
   gameStart() {
     this.#noticeGameStart();
@@ -33,11 +42,7 @@ class BridgeController {
   #validateBridgeSize(bridgeSize) {
     const errorMessage =
       Validator.getErrorMessageIfInvalidBridgeSize(bridgeSize);
-    if (errorMessage) {
-      OutputView.printErrorMessage(errorMessage);
-      this.#inputBridgeSize();
-      return;
-    }
+    this.#handleError(errorMessage, ERROR_TYPE.SIZE);
 
     this.#handleBridgeSize(bridgeSize);
   }
@@ -54,11 +59,7 @@ class BridgeController {
 
   #validateDirection(direction) {
     const errorMessage = Validator.getErrorMessageIfInvalidDirection(direction);
-    if (errorMessage) {
-      OutputView.printErrorMessage(errorMessage);
-      this.#inputDirection();
-      return;
-    }
+    this.#handleError(errorMessage, ERROR_TYPE.DIRECTION);
 
     this.#handleDirection(direction);
   }
@@ -84,11 +85,7 @@ class BridgeController {
 
   #validateGameCommand(command) {
     const errorMessage = Validator.getErrorMessageIfInvalidCommand(command);
-    if (errorMessage) {
-      OutputView.printErrorMessage(errorMessage);
-      this.#inputRetry();
-      return;
-    }
+    this.#handleError(errorMessage, ERROR_TYPE.COMMAND);
 
     this.#commandHandler[command]();
   }
@@ -104,7 +101,11 @@ class BridgeController {
     this.#inputDirection();
   }
 
-  #gameRetry() {}
+  #gameRetry() {
+    this.#bridgeGame.retry();
+
+    this.#inputDirection();
+  }
 
   #printGameResult() {
     const gameResult = this.#bridgeGame.getResultInfo();
@@ -116,6 +117,13 @@ class BridgeController {
 
   #gameExit() {
     Console.close();
+  }
+
+  #handleError(message, type) {
+    if (message) {
+      OutputView.printErrorMessage(message);
+      this.#errorHandler[type]();
+    }
   }
 }
 

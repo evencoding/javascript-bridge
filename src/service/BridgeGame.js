@@ -13,10 +13,14 @@ class BridgeGame {
   #triedCount;
 
   constructor() {
+    this.#triedCount = 1;
+    this.#initGameProcess();
+  }
+
+  #initGameProcess() {
     this.#nextCellIndex = 0;
     this.#bridgeMap = { U: [], D: [] };
     this.#fail = false;
-    this.#triedCount = 1;
   }
 
   #directionHandler = {
@@ -59,7 +63,10 @@ class BridgeGame {
     this.#nextCellIndex += 1;
   }
 
-  retry() {}
+  retry() {
+    this.#initGameProcess();
+    this.#triedCount += 1;
+  }
 
   checkUserWin() {
     return this.#nextCellIndex === this.#bridge.length;
