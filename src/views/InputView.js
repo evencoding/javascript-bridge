@@ -12,7 +12,12 @@ const InputView = {
     );
   },
 
-  readGameCommand() {},
+  readGameCommand(callback) {
+    Console.readLine(
+      '\n게임을 다시 시도할지 여부를 입력해주세요. (재시도: R, 종료: Q)\n',
+      callback
+    );
+  },
 };
 
 module.exports = InputView;

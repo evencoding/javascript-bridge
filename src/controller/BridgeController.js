@@ -10,6 +10,11 @@ class BridgeController {
     this.#bridgeGame = new BridgeGame();
   }
 
+  #commandHandler = {
+    1: this.#gameRetry.bind(this),
+    2: this.#gameExit.bind(this),
+  };
+
   gameStart() {
     this.#noticeGameStart();
     this.#inputBridgeSize();
@@ -70,6 +75,18 @@ class BridgeController {
   #printCurMap(curMap) {
     OutputView.printMap(curMap);
   }
+
+  #inputRetry() {
+    InputView.readGameCommand(this.#validateGameCommand.bind(this));
+  }
+
+  #validateGameCommand(command) {}
+
+  #checkUserWin() {}
+
+  #gameRetry() {}
+
+  #gameExit(isCleared) {}
 }
 
 module.exports = BridgeController;

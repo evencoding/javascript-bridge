@@ -10,10 +10,13 @@ class BridgeGame {
 
   #fail;
 
+  #triedCount;
+
   constructor() {
     this.#nextCellIndex = 0;
     this.#bridgeMap = { U: [], D: [] };
     this.#fail = false;
+    this.#triedCount = 0;
   }
 
   #directionHandler = {
