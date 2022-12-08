@@ -14,7 +14,7 @@ class BridgeController {
 
   #commandHandler = {
     R: this.#gameRetry.bind(this),
-    Q: this.#gameExit.bind(this),
+    Q: this.#printGameResult.bind(this),
   };
 
   gameStart() {
@@ -71,7 +71,7 @@ class BridgeController {
       this.#inputRetry();
       return;
     }
-    this.#checkUserWin();
+    this.#checkGameState();
   }
 
   #printCurMap(curMap) {
@@ -93,15 +93,28 @@ class BridgeController {
     this.#commandHandler[command]();
   }
 
-  #checkUserWin() {}
+  #checkGameState() {
+    const doesUserWin = this.#bridgeGame.checkUserWin();
+
+    if (doesUserWin) {
+      this.#printGameResult();
+      return;
+    }
+
+    this.#inputDirection();
+  }
 
   #gameRetry() {}
 
-  #gameExit() {
+  #printGameResult() {
     const gameResult = this.#bridgeGame.getResultInfo();
 
     OutputView.printResult(gameResult);
 
+    this.#gameExit();
+  }
+
+  #gameExit() {
     Console.close();
   }
 }

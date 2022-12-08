@@ -61,6 +61,10 @@ class BridgeGame {
 
   retry() {}
 
+  checkUserWin() {
+    return this.#nextCellIndex === this.#bridge.length;
+  }
+
   getResultInfo() {
     return {
       bridgeMap: this.#bridgeMap,
