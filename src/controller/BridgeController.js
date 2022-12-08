@@ -37,7 +37,15 @@ class BridgeController {
 
   #handleBridgeSize(bridgeSize) {
     this.#bridgeGame.makeBridge(Number(bridgeSize));
+
+    this.#inputDirection();
   }
+
+  #inputDirection() {
+    InputView.readMoving(this.#validateDirection.bind(this));
+  }
+
+  #validateDirection(direction) {}
 }
 
 module.exports = BridgeController;
