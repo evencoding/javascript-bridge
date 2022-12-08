@@ -52,6 +52,23 @@ class BridgeController {
       this.#inputDirection();
       return;
     }
+
+    this.#handleDirection(direction);
+  }
+
+  #handleDirection(direction) {
+    const { curMap, fail } = this.#bridgeGame.move(direction);
+    this.#printCurMap(curMap);
+
+    if (fail) {
+      this.#inputRetry();
+      return;
+    }
+    this.#checkUserWin();
+  }
+
+  #printCurMap(curMap) {
+    OutputView.printMap(curMap);
   }
 }
 

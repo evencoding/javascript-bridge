@@ -8,7 +8,12 @@ const OutputView = {
     Console.print('다리 건너기 게임을 시작합니다.');
   },
 
-  printMap() {},
+  printMap(map) {
+    const rows = Object.values(map);
+    rows.forEach((row) => {
+      Console.print(`[ ${row.join(' | ')} ]`);
+    });
+  },
 
   /**
    * 게임의 최종 결과를 정해진 형식에 맞춰 출력한다.
