@@ -1,16 +1,4 @@
-const BridgeController = require('./controller/BridgeController');
-
-class App {
-  #bridgeCtrl;
-
-  constructor() {
-    this.#bridgeCtrl = new BridgeController();
-  }
-
-  play() {
-    this.#bridgeCtrl.gameStart();
-  }
-}
+class App {}
 
 const app = new App();
 app.play();
