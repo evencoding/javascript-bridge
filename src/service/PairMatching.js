@@ -26,6 +26,12 @@ class PairMatching {
   matchCrews([process, level, mission]) {
     this.processHandler[process](level, mission);
   }
+
+  initData() {
+    this.#frontend.initLevels();
+    this.#backend.initLevels();
+    this.#failCount = 0;
+  }
 }
 
 module.exports = PairMatching;

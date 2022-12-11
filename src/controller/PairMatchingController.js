@@ -67,11 +67,11 @@ class PairMatchingController {
     this.#pairMatching.matchCrews(missionInfos);
   }
 
-  #startMatching() {}
-
   #checkPair() {}
 
-  #initPair() {}
+  #initPair() {
+    this.#pairMatching.initData();
+  }
 
   #exit() {
     Console.close();

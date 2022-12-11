@@ -8,12 +8,18 @@ class Frontend {
 
   constructor() {
     this.#crews = frontCrews;
+    this.initLevels();
+  }
+
+  initLevels() {
     this.#levels = {};
   }
 
-  setMatchingData([process, level, mission]) {
+  setMatchingData(level, mission) {
     const suffledCrews = this.#suffleCrews();
     this.#levels[level][mission] = suffledCrews;
+
+    this.getMatchingData(level, mission);
   }
 
   #suffleCrews() {
