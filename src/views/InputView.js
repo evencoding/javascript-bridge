@@ -1,5 +1,5 @@
 const { Console } = require('@woowacourse/mission-utils');
-const { INPUT_MESSAGE } = require('./viewConstant');
+const { INPUT_MESSAGE } = require('../constants/view');
 
 const InputView = {
   askSelectFn(callback) {

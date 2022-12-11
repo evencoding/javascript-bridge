@@ -1,4 +1,5 @@
 const { Console } = require('@woowacourse/mission-utils');
+const { OUTPUT_MESSAGE } = require('../constants/view');
 
 const OutputView = {
   printError(message) {
@@ -7,6 +8,10 @@ const OutputView = {
 
   printSelectFn() {
     Console.print('기능을 선택하세요.');
+  },
+
+  printMissionProcess() {
+    Console.print(OUTPUT_MESSAGE.MISSION_PROCESS);
   },
 };
 
