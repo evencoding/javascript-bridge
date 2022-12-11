@@ -1,3 +1,5 @@
+const { Console } = require('@woowacourse/mission-utils');
+
 const PairMatching = require('../service/PairMatching');
 
 const OutputView = require('../views/OutputView');
@@ -45,20 +47,24 @@ class PairMatchingController {
     InputView.askMissionInfo(this.#validateMissionInfo.bind(this));
   }
 
-  #validateMissionInfo(missionInfo) {
-    const info = missionInfo.split(', ');
+  #validateMissionInfo(inputValue) {
+    const missionInfos = inputValue.split(', ');
     try {
-      Validator.throwErrorIfInvalidMissionInfo(info);
+      Validator.throwErrorIfInvalidMissionInfo(missionInfos);
     } catch ({ message }) {
       OutputView.printError(message);
       return this.#inputMissionInfo();
     }
-    this.#checkAlreadyMatched(info);
+    this.#checkAlreadyMatched(missionInfos);
   }
 
-  #checkAlreadyMatched(missionInfo) {
+  #checkAlreadyMatched(missionInfos) {
     // check
-    // this.#startMatching(missionInfo.split(', '));
+    this.#printResult(missionInfos);
+  }
+
+  #printResult(missionInfos) {
+    this.#pairMatching.matchCrews(missionInfos);
   }
 
   #startMatching() {}
@@ -67,7 +73,9 @@ class PairMatchingController {
 
   #initPair() {}
 
-  #exit() {}
+  #exit() {
+    Console.close();
+  }
 }
 
 module.exports = PairMatchingController;

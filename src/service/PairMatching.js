@@ -4,16 +4,27 @@ const Frontend = require('../models/Frontend');
 class PairMatching {
   #frontend;
   #backend;
+  #failCount;
 
   constructor() {
     this.#frontend = new Frontend();
     this.#backend = new Backend();
+    this.#failCount = 0;
   }
 
+  processHandler = Object.freeze({
+    [PROCESS.Frontend]: this.#frontend.setMatchingData.bind(this.#frontend)(
+      level,
+      mission
+    ),
+    [PROCESS.Backend]: this.#backend.setMatchingData.bind(this.#backend)(
+      level,
+      mission
+    ),
+  });
+
   matchCrews([process, level, mission]) {
-    console.log(process);
-    console.log(level);
-    console.log(mission);
+    this.processHandler[process](level, mission);
   }
 }
 

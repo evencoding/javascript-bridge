@@ -1,3 +1,13 @@
-class Backend {}
+const { BackCrews } = require('../utils/readFile');
 
-module.exports = Backend;
+class Backend {
+  #crews;
+  #levels;
+
+  constructor() {
+    this.#crews = BackCrews;
+    this.#levels = {};
+  }
+}
+
+module.exports = Frontend;
