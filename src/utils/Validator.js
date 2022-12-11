@@ -6,7 +6,7 @@ const Validator = {
     if (!REGEX.COMMAND.test(command)) throw new Error(ERROR_MESSAGE.COMMAND);
   },
 
-  throwErrorIfInvalidMissionInfo([process, level, mission]) {
+  throwErrorIfInvalidMissionInfo([process, level, mission = '']) {
     if (!REGEX.PROCESS.test(process)) {
       throw new Error(ERROR_MESSAGE.INVALID_PROCESS);
     }

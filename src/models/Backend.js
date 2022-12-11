@@ -10,4 +10,4 @@ class Backend {
   }
 }
 
-module.exports = Frontend;
+module.exports = Backend;

@@ -59,12 +59,26 @@ class PairMatchingController {
   }
 
   #checkAlreadyMatched(missionInfos) {
-    // check
-    this.#printResult(missionInfos);
+    const data = this.#pairMatching.getMatchingData(missionInfos);
+    console.log('data', data);
+    if (!data) {
+      return this.#printResult(missionInfos);
+    }
+
+    OutputView.printAlreadyMatched();
+    InputView.askReMatch(this.#validateReMatch.bind(this, missionInfos));
+  }
+
+  #validateReMatch(missionInfos, inputValue) {
+    console.log(missionInfos, inputValue);
   }
 
   #printResult(missionInfos) {
-    this.#pairMatching.matchCrews(missionInfos);
+    const result = this.#pairMatching.matchCrews(missionInfos);
+
+    OutputView.printMatchingData(result);
+
+    this.selectFn();
   }
 
   #checkPair() {}
