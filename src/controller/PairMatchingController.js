@@ -1,14 +1,20 @@
 const OutputView = require('../views/OutputView');
 const InputView = require('../views/InputView');
+const Validator = require('../utils/Validator');
 
 class PairMatchingController {
   selectFn() {
     OutputView.printSelectFn();
-    InputView.askSelectFn(this.#handleCommand.bind(this));
+    InputView.askSelectFn(this.#validateCommand.bind(this));
   }
 
-  #handleCommand(command) {
-    console.log(command);
+  #validateCommand(command) {
+    try {
+      Validator.throwErrorIfInvalidCommand(command);
+    } catch ({ message }) {
+      OutputView.printError(message);
+      this.selectFn();
+    }
   }
 
   matchPair() {}
