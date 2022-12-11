@@ -29,6 +29,16 @@ class PairMatchingController {
 
   #matchPair() {
     OutputView.printMissionProcess();
+
+    this.#inputMissionInfo();
+  }
+
+  #inputMissionInfo() {
+    InputView.askMissionInfo(this.#validateMissionInfo.bind(this));
+  }
+
+  #validateMissionInfo(missionInfo) {
+    console.log(missionInfo);
   }
 
   #checkPair() {}
