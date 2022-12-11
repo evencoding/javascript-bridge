@@ -1,7 +1,19 @@
+const { MISSION } = require('../constants');
+const { REGEX, ERROR_MESSAGE } = require('../constants/validator');
+
 const Validator = {
   throwErrorIfInvalidCommand(command) {
-    const regex = /^(1|2|3|Q)$/;
-    if (!regex.test(command)) throw new Error('올바른 명령어를 입력해주세요.');
+    if (!REGEX.COMMAND.test(command)) throw new Error(ERROR_MESSAGE.COMMAND);
+  },
+
+  throwErrorIfInvalidMissionInfo([process, level, mission]) {
+    if (!REGEX.PROCESS.test(process)) {
+      throw new Error(ERROR_MESSAGE.INVALID_PROCESS);
+    }
+    if (!REGEX.LEVEL.test(level)) throw new Error(ERROR_MESSAGE.INVALID_LEVEL);
+    if (!MISSION[level].includes(mission)) {
+      throw new Error(ERROR_MESSAGE.INVALID_MISSION);
+    }
   },
 };
 

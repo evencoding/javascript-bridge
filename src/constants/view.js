@@ -1,3 +1,5 @@
+const { PROCESS, MISSION } = require('.');
+
 const INPUT_MESSAGE = Object.freeze({
   ASK_FUNCTION: `1. 페어 매칭
 2. 페어 조회
@@ -7,15 +9,19 @@ Q. 종료\n`,
 ex) 백엔드, 레벨1, 자동차경주\n`,
 });
 
+const MISSION_LIST = Object.entries(MISSION).map(
+  ([level, missions]) => `  - ${level}: ${missions.join(' | ')}`
+);
+
 const OUTPUT_MESSAGE = Object.freeze({
   MISSION_PROCESS: `\n#############################################
-과정: 백엔드 | 프론트엔드
+과정: ${PROCESS.BACKEND} | ${PROCESS.FRONTEND}
 미션:
-  - 레벨1: 자동차경주 | 로또 | 숫자야구게임
-  - 레벨2: 장바구니 | 결제 | 지하철노선도
-  - 레벨3: 
-  - 레벨4: 성능개선 | 배포
-  - 레벨5: 
+  - 레벨1: ${MISSION.레벨1.join(' | ')}
+  - 레벨2: ${MISSION.레벨2.join(' | ')}
+  - 레벨3: ${MISSION.레벨3.join(' | ')}
+  - 레벨4: ${MISSION.레벨4.join(' | ')}
+  - 레벨5: ${MISSION.레벨5.join(' | ')}
 ############################################`,
 });
 
