@@ -2,6 +2,7 @@ const { MESSAGE } = require('./constant');
 const BridgeController = require('./controller/BridgeController');
 const InputView = require('./views/InputView');
 
+// push test
 class App {
   #bridgeCtrl;
 
